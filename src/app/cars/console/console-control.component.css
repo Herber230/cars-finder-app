@@ -1,0 +1,42 @@
+
+.console-container {
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+}
+  
+.console-icon {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0);
+    color: white;
+    min-width: 50px;
+    text-align: center;
+    font-size: 35px;
+    margin-top: 15px;
+}
+
+.console-text {
+    font-size: 40px;
+    font-weight: 300;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+    color: white;
+    border: 0px;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+}
+
+.console-info {
+    font-size: small;
+    text-align: right;
+    color: white;
+    border: 0px;
+    border-style: none;
+    width: 100%;
+    outline: none;
+    margin-top: -15px;
+}
+
+
+  

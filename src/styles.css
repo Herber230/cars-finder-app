@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+
+.transparent-modal-content .modal-content {
+    border: none !important;
+    background:rgba(0, 0, 0, 0);
+    margin-top: 40%;
+}
+  

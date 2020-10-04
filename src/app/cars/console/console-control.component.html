@@ -1,0 +1,10 @@
+<div class="console-container">
+    <em [ngClass]="iconClass"></em>
+    <input #inputSearchText 
+        type="text" class="console-text"  
+        [placeholder]="placeholder" 
+        (keypress)="keypress($event)"
+        (keyup)="keyup($event)"
+    /> 
+</div>
+<div class="console-info">{{consoleInfoMessage}}</div>
