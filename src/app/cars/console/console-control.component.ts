@@ -55,14 +55,23 @@ class ConsoleControl implements OnInit
 
     private searchCars() : void
     {
+        let queryFilter : any;
+        if (this.consoleInputValue)
+            queryFilter = { lineName: this.consoleInputValue };
+
         this.carService
-            .search()
+            .search(queryFilter)
             .subscribe({
                 next: results => {
                     this.sharedDataService.searchCarResult = results;
                     this.bsModalRef.hide();
                 }   
             });
+    }
+
+    private loadData() : void
+    {
+
     }
 
     //#endregion 
@@ -118,6 +127,12 @@ class ConsoleControl implements OnInit
     get searchType()
     {
         return this._searchType;
+    }
+
+    get consoleInputValue() : string 
+    {
+        if (this.inputSearchText && this.inputSearchText.nativeElement)
+            return this.inputSearchText.nativeElement.value;
     }
 
     //#endregion

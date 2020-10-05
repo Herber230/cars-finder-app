@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { CarConfigService } from './car-config.service';
 import { HandledException, HandledExceptionType } from '../utils/HandledException';
 import { Car } from '../model/inderface-models';
@@ -51,13 +51,24 @@ export class CarService
     }
 
 
-    search()
+    search(queryFilters : any)
     {
+        let filtersString = this.createFiltersUri(queryFilters);
+
         let completeUri = this.carsUri;
+        if (filtersString)
+            completeUri += filtersString;
 
         return this.httpService
                     .get<any>(completeUri)
                     .pipe(map( response => response && response.data && response.data.length > 0 ? response.data as Array<Car> : null ));
+    }
+
+    private createFiltersUri(queryFilters : any) : string
+    {
+        let filtersString = '?fixed_filter=lineName|lk|'+queryFilters.lineName;
+
+        return filtersString;
     }
 
     //#endregion

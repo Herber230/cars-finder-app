@@ -9,10 +9,20 @@
                 </div>
                 <div class="body-container">
                     <div *ngIf="state == 'RUN_BACKEND_HELPER'">
-                        Asistente de ejecución de backend!!!
+                        <p style="font-size: 20px;">
+                            It seems there is no backend api running on localhost:3000. Please proceed to the following repo and follow the instructions.
+                        </p>
+                        <div style="text-align: center; font-size: 30px;">
+                            <a href="https://github.com/Herber230/entifix-cars-app">entifix-cars-app</a>
+                        </div>
                     </div>
                     <div *ngIf="state == 'FILL_DATA_HELPER'">
-                        Asistente de llenado de datos!!!
+                        <p style="font-size: 20px;">
+                            It seems there is no data loaded. With the button below you can load some rectods to test.
+                        </p>
+                        <div style="text-align: center; font-size: 30px;">
+                            <button type="button" class="btn btn-primary" (click)="loadData()" >Load Data</button>
+                        </div>
                     </div>
                     <div *ngIf="state == 'SEARCH_HELPER'">
                         <div *ngIf="!existResults">
@@ -25,7 +35,7 @@
                                 <br/>          
                                 <p-panel styleClass="back-primary-color">
                                     <p-header >
-                                        Header content here
+                                        Car
                                     </p-header>
                                     lineName:&nbsp;{{result.lineName}}<br/>
                                     year:&nbsp;{{result.year}}
