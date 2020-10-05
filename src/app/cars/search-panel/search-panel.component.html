@@ -1,0 +1,30 @@
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="row">
+            <div *ngIf="state == 'RUN_BACKEND_HELPER'">
+                Asistente de ejecución de backend!!!
+            </div>
+            <div *ngIf="state == 'FILL_DATA_HELPER'">
+                Asistente de llenado de datos!!!
+            </div>
+            <div *ngIf="state == 'SEARCH_HELPER'">
+                Panel de resultados!!!
+                <br/>
+                <div *ngFor="let result of searchCarsResult">
+                    <pre class="card card-block card-header">
+                        lineName:&nbsp;{{result.lineName}}<br/>
+                        year:&nbsp;{{result.year}} 
+                    </pre>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+
+
+

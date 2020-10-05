@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal'
 import { CarsModule } from './cars/cars.module';
+import { SharedDataService } from './cars/services/shared-data.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { CarsModule } from './cars/cars.module';
     CarsModule,
     ModalModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    SharedDataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,8 @@
 import { Component, OnInit, TemplateRef, ViewChild, ElementRef } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
+import { CarService } from '../services/car.service';
+import { SharedDataService } from '../services/shared-data.service';
 
 
 @Component({
@@ -21,6 +23,11 @@ class ConsoleControl implements OnInit
 
     //#region Methods
 
+    constructor(public bsModalRef: BsModalRef, private carService : CarService, private sharedDataService : SharedDataService) 
+    {
+
+    }
+
     ngOnInit(): void {
 
         setTimeout( () => this.inputSearchText.nativeElement.focus(), 0);
@@ -34,11 +41,28 @@ class ConsoleControl implements OnInit
         //     if (event.code == 'Enter' && this._consoleMode == ConsoleMode.COMMAND && this.consoleInputValue)
         //         this.performCommand();
         // }
+
+        if (event instanceof KeyboardEvent) {
+            if (event.code == 'Enter')
+                this.searchCars();
+        }
     }
 
     keyup(event) : void
     {
         // this.evaluateContent();
+    }
+
+    private searchCars() : void
+    {
+        this.carService
+            .search()
+            .subscribe({
+                next: results => {
+                    this.sharedDataService.searchCarResult = results;
+                    this.bsModalRef.hide();
+                }   
+            });
     }
 
     //#endregion 
