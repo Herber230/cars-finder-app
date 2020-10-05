@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from '../services/car.service';
 import { SharedDataService } from '../services/shared-data.service';
+import { Panel } from 'primeng/panel'
 import { HandledException, HandledExceptionType } from '../utils/HandledException';
 
 @Component({
@@ -51,6 +52,11 @@ export class SearchPanelComponent implements OnInit
     get searchCarsResult()
     {
         return this.sharedDataService && this.sharedDataService.searchCarResult ? this.sharedDataService.searchCarResult : [];
+    }
+
+    get existResults() : boolean
+    {
+        return this.sharedDataService && this.sharedDataService.searchCarResult && this.sharedDataService.searchCarResult.length > 0;
     }
     
     

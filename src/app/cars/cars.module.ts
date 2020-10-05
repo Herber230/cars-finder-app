@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { CardModule } from 'primeng/card'; 
+import { PanelModule } from 'primeng/panel' 
 
 import { ListViewComponent } from './list-view/list-view.component';
 import { ConsoleControl } from './console/console-control.component';
@@ -18,7 +19,8 @@ import { SearchPanelComponent } from './search-panel/search-panel.component';
   imports: [
     CommonModule,
     HttpClientModule,
-    TypeaheadModule
+    CardModule,
+    PanelModule
   ],
   exports: [
     ConsoleControl
