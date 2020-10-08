@@ -68,9 +68,26 @@ export class CarService
 
     private createFiltersUri(queryFilters : any) : string
     {
-        let filtersString = '?fixed_filter=lineName|lk|'+queryFilters.lineName;
+        // let filtersString = '?fixed_filter=lineName|lk|'+queryFilters.lineName;
+        let filterString : string;
+        let attachValue = (property, operator, value) => {
+            if (!filterString)
+                filterString = `?optional_filter=${property}|${operator}|${value}`;
+            else
+                filterString += `&optional_filter=${property}|${operator}|${value}`;
+        }
 
-        return filtersString;
+        for(let property in queryFilters)
+            if (queryFilters[property]) 
+                switch(property) {
+                    case 'year':
+                        attachValue(property, 'eq', queryFilters[property]);
+                        break;
+                    default:
+                        attachValue(property, 'lk', queryFilters[property]);                        
+                }
+
+        return filterString;
     }
 
 

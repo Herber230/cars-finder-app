@@ -57,7 +57,14 @@ class ConsoleControl implements OnInit
     {
         let queryFilter : any;
         if (this.consoleInputValue)
-            queryFilter = { lineName: this.consoleInputValue };
+            queryFilter = { 
+                lineName: this.consoleInputValue,
+                color: this.consoleInputValue, 
+                'brand.name': this.consoleInputValue
+            };
+
+        if (!isNaN(this.consoleInputValue as any))
+            queryFilter.year = parseInt(this.consoleInputValue);
 
         this.carService
             .search(queryFilter)
