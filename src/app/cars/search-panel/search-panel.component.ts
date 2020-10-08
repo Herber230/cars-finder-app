@@ -3,6 +3,7 @@ import { CarService } from '../services/car.service';
 import { SharedDataService } from '../services/shared-data.service';
 import { Panel } from 'primeng/panel'
 import { HandledException, HandledExceptionType } from '../utils/HandledException';
+import { JsonPipe } from '@angular/common';
 
 @Component({
     selector: 'app-search-panel',
@@ -44,6 +45,16 @@ export class SearchPanelComponent implements OnInit
             });
     }
 
+    createExampleRecords() : void
+    {
+        this.carsService.createExampleRecords().subscribe({
+            next:  createdRecord => { 
+                console.log('[>] Created record: ' + JSON.stringify(createdRecord)); 
+                this.state = SearchPanelState.SEARCH_HELPER
+            }        
+        });
+    }
+
     //#endregion
 
 
@@ -57,8 +68,7 @@ export class SearchPanelComponent implements OnInit
     get existResults() : boolean
     {
         return this.sharedDataService && this.sharedDataService.searchCarResult && this.sharedDataService.searchCarResult.length > 0;
-    }
-    
+    }    
     
     //#endregion
 }

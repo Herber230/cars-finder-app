@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, pipe } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { Observable, pipe, zip, forkJoin } from 'rxjs';
+import { filter, map,  } from 'rxjs/operators';
 import { CarConfigService } from './car-config.service';
 import { HandledException, HandledExceptionType } from '../utils/HandledException';
-import { Car } from '../model/inderface-models';
+import { Brand, Car } from '../model/inderface-models';
+import { insertData } from 'src/app/data/insert-data';
+import { BrandService } from './brand.service';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +20,7 @@ export class CarService
 
     //#region Methods
 
-    constructor(private httpService : HttpClient, private configService : CarConfigService) { }
+    constructor(private httpService : HttpClient, private configService : CarConfigService, private brandService : BrandService) { }
     
     verifyBackend() 
     {
@@ -69,6 +71,50 @@ export class CarService
         let filtersString = '?fixed_filter=lineName|lk|'+queryFilters.lineName;
 
         return filtersString;
+    }
+
+
+
+    create(car : Car) : Observable<Car>
+    {
+        return this.httpService
+                    .post<any>(this.carsUri, car)
+                    .pipe( map( response => {
+                            // console.log('[>] CarService create http response');
+                            return response && response.data ? response.data : null
+                        }));
+    }
+
+
+    createExampleRecords(): Observable<Car | Brand> 
+    {
+        return new Observable<Car | Brand>(mainObserver => {
+            let asyncTasks = new Array<Observable<Car | Brand>>();
+
+            let total = insertData.map( batch => 1 + batch.cars.length ).reduce( (prev, curr) => prev + curr, 0);
+            let attachTask = (singleTask : Observable<Car | Brand>) => {
+                asyncTasks.push(singleTask);
+                if (asyncTasks.length == total)
+                    zip(asyncTasks).subscribe({ complete: () => mainObserver.complete() });
+            };
+
+            insertData.forEach(batch => {
+                let brandCreation = this.brandService.create(batch.brand);
+                attachTask(brandCreation);
+
+                brandCreation.subscribe({
+                    next: createdBrand => {
+                        mainObserver.next(createdBrand);
+                        batch.cars.forEach(car => {
+                            let carCreation = this.create({ ...car, idBrand: createdBrand.id });
+                            attachTask(carCreation);
+                            carCreation.subscribe({ next: createdCar => mainObserver.next(createdCar), complete: () => console.log('[>] CarCreation completed') });
+                        });
+                    },
+                    complete: () => console.log('[>] BrandCreation completed')
+                });
+            });
+        });
     }
 
     //#endregion
