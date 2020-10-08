@@ -33,12 +33,30 @@
                         <div *ngIf="existResults">
                             <div *ngFor="let result of searchCarsResult">
                                 <br/>          
-                                <p-panel styleClass="back-primary-color">
-                                    <p-header >
-                                        Car
+                                <p-panel>
+                                    <p-header>
+                                        <div class="panel-header-text">CAR</div>
                                     </p-header>
-                                    lineName:&nbsp;{{result.lineName}}<br/>
-                                    year:&nbsp;{{result.year}}
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Brand</td>
+                                                <td><strong>{{result.$brand}}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Line Name</td>
+                                                <td><strong>{{result.lineName}}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Year</td>
+                                                <td><strong>{{result.year}}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Color</td>
+                                                <td><strong>{{result.color}}</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     <p-footer>
                                         <div style="text-align: center;">
                                             <button type="button" class="btn btn-primary btn-sm">Ver</button>

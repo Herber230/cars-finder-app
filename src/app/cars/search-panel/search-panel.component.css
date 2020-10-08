@@ -19,3 +19,10 @@
 .body-container {
     margin-top: 50px;
 }
+
+.panel-header-text {
+    color: white;
+    font-weight: bolder;
+    text-align: center;
+    width: 100%;
+}
